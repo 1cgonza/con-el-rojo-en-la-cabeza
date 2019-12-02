@@ -29,10 +29,14 @@ body {
 
 .img {
   width: 100%;
-  height: 200vh;
+  height: 400vh;
   overflow: hidden;
+  position: relative;
 
   img {
+    position: absolute;
+    top: 0;
+    left: 0;
     transition: filter 5s;
     filter: contrast(100%) hue-rotate(0deg);
     // contrast(249%) hue-rotate(333deg);
@@ -43,5 +47,10 @@ body {
       // filter: contrast(249%) hue-rotate(-33deg);
     }
   }
+}
 
+.container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
 }
