@@ -2,6 +2,7 @@ export default images => {
   function onIntersection(imageEntites) {
     imageEntites.forEach(image => {
       if (image.isIntersecting) {
+        console.log(image.target.alt);
         observer.unobserve(image.target);
         image.target.onload = () => {
           image.target.classList.add('loaded');
@@ -12,8 +13,8 @@ export default images => {
   }
 
   const observer = new IntersectionObserver(onIntersection, {
-    root: document.getElementById('main'),
-    rootMargin: '0px 0px 200px 0px'
+    // root: document.querySelector('#mask'),
+    rootMargin: '0px 0px 0px 0px'
   });
 
   images.forEach(image => observer.observe(image));

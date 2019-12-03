@@ -6,7 +6,7 @@ let params = {
   api_key: '2512f39372e99a27a692abc3bae34fde',
   nojsoncallback: '1',
   // per_page: '10',
-  extras: 'o_dims,url_o,url_k',
+  extras: 'o_dims,url_o,url_k,description',
   format: 'json'
 };
 
