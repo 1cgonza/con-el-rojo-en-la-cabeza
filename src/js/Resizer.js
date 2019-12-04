@@ -23,5 +23,6 @@ export default class Resizer {
     this.setParams();
 
     this.main.style.width = `${this.eleW * this.elements.length}px`;
+    this.elements.forEach(ele => (ele.container.style.width = `${this.eleW}px`));
   };
 }

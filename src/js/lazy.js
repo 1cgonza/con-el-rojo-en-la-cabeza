@@ -2,7 +2,6 @@ export default images => {
   function onIntersection(imageEntites) {
     imageEntites.forEach(image => {
       if (image.isIntersecting) {
-        console.log(image.target.alt);
         observer.unobserve(image.target);
         image.target.onload = () => {
           image.target.classList.add('loaded');

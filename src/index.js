@@ -1,5 +1,6 @@
 import './scss/styles.scss';
 import Resizer from './js/Resizer';
+import Zoom from './js/Zoom';
 import fetch from './js/fetch';
 import lazy from './js/lazy';
 
@@ -14,11 +15,10 @@ const resize = new Resizer(main);
 
 function init(page) {
   fetch(page).then(res => {
-    console.log(res);
     res.photo.forEach(photo => {
       const container = document.createElement('div');
       const img = document.createElement('img');
-      const desc = document.createElement('p');
+      const desc = document.createElement('div');
 
       container.className = 'img';
       img.className = 'lazy';
@@ -27,8 +27,9 @@ function init(page) {
       img.dataset.src = photo.url_k;
       img.setAttribute('alt', photo.title);
       desc.innerText = photo.description._content;
-
       container.style.width = `${resize.eleW}px`;
+
+      new Zoom(container, img);
 
       container.appendChild(img);
       container.appendChild(desc);

@@ -96,6 +96,24 @@ body {
   margin: 0;
 }
 
+header {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999;
+
+  h1 {
+
+    color: #d62626;
+    font-size: 5em;
+    width: 30%;
+    line-height: 0.7;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 main {
   height: 100vh;
   overflow-x: scroll;
@@ -108,6 +126,8 @@ main {
   float: left;
   height: 100vh;
   position: relative;
+  overflow: hidden;
+  cursor: zoom-in;
 
   img {
     width: auto;
@@ -120,12 +140,18 @@ main {
     }
   }
 
+  &.zooming {
+    cursor: zoom-out;
+  }
+
   .descripcion {
     position: absolute;
-    color: red;
+    white-space: normal;
+    color: white;
     top: 0;
     left: 0;
     width: 100%;
+    font-family: 'Squada One', cursive;
   }
 }
 
