@@ -4,11 +4,8 @@ import Zoom from './js/Zoom';
 import fetch from './js/fetch';
 import lazy from './js/lazy';
 
-// TODO: prueba, hacer palpitar las fotos con el texto
-
 const main = document.getElementById('main');
 let elements = [];
-let images;
 let scrolledLeft = 0;
 
 const resize = new Resizer(main);
@@ -46,35 +43,19 @@ function init(page) {
     if (res.page < res.pages) {
       init(++res.page);
     } else {
-      images = [...document.querySelectorAll('.lazy')];
+      const images = [...document.querySelectorAll('.lazy')];
       resize.update(elements);
       lazy(images);
     }
   });
 }
 
-// main.onscroll = e => {
-//   if (!current) return;
-//   const img = current[1];
-//   const scrolled = main.scrollTop;
-//   const coords = current[0].boundingClientRect;
-//   const offY = scrolled - coords.top;
-//   const yStep = img.clientHeight / coords.height;
-//   const oStep = 1 / (window.innerHeight / 2);
-//   const o = offY < window.innerHeight / 2 ? offY * oStep : 1;
-//   const hue = offY > window.innerHeight / 5 ? 'contrast(249%) hue-rotate(-33deg)' : 'contrast(100%) hue-rotate(0deg)';
-//   console.log(main.scrollLeft);
-//   // img.style.bottom = `-${offY * yStep}px`;
-//   // img.style.opacity = o;
-//   // img.style.filter = hue;
-//   // console.log(imgH, divH);
-// };
-
 init(1);
 
 main.addEventListener('wheel', ev => {
   ev.preventDefault();
-  scrolledLeft += ev.deltaY + ev.deltaX;
+  const delta = Math.sign(event.deltaY);
+  scrolledLeft += delta * 120;
 
   if (scrolledLeft < 0) {
     scrolledLeft = 0;
