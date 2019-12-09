@@ -58,8 +58,8 @@ init(1);
 
 main.addEventListener('wheel', ev => {
   ev.preventDefault();
-  const delta = Math.sign(event.deltaY);
-  scrolledLeft += delta * 120;
+  const delta = Math.sign(ev.deltaY);
+  scrolledLeft += delta * 20;
 
   if (scrolledLeft < 0) {
     scrolledLeft = 0;
