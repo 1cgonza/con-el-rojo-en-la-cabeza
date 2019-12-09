@@ -7,6 +7,10 @@ import lazy from './js/lazy';
 const main = document.getElementById('main');
 let elements = [];
 let scrolledLeft = 0;
+const count = document.getElementById('count');
+const inicio = new Date('11/21/2019');
+const fin = new Date();
+count.innerText = (((fin.getTime() - inicio.getTime()) / (1000 * 3600 * 24)) | 0) + 1;
 
 const resize = new Resizer(main);
 
