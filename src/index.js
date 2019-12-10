@@ -27,7 +27,7 @@ function init(page) {
 
       img.dataset.src = photo.url_k;
       img.setAttribute('alt', photo.title);
-      desc.innerText = photo.description._content;
+      desc.innerText = photo.description._content.replace(/&quot;/g, '"');
       container.style.width = `${resize.eleW}px`;
 
       new Zoom(container, img);
@@ -59,7 +59,7 @@ init(1);
 main.addEventListener('wheel', ev => {
   ev.preventDefault();
   const delta = Math.sign(ev.deltaY);
-  scrolledLeft += delta * 20;
+  scrolledLeft += delta * 40;
 
   if (scrolledLeft < 0) {
     scrolledLeft = 0;

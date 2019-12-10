@@ -1,0 +1,112 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+header {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999;
+
+  h1 {
+    font-family: 'Squada One', cursive;
+    font-size: 0;
+    line-height: 0.7;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    color: #e44b4b;
+  }
+
+  #descripcion {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    letter-spacing: 2px;
+    padding: 5px;
+    font-size: 0;
+  }
+}
+
+main {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  background-color: black;
+}
+
+.img {
+  float: left;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  cursor: zoom-in;
+
+  img {
+    width: auto;
+    height: 100vh;
+    opacity: 0;
+    transition: opacity 5s;
+
+    &.loaded {
+      opacity: 1;
+    }
+  }
+
+  &.zooming {
+    cursor: zoom-out;
+  }
+
+  .descripcion {
+    position: absolute;
+    white-space: normal;
+    color: #faf6f6;
+    text-shadow: 1px 1px #000;
+    bottom: 3em;
+    left: 0;
+    width: 100%;
+    font-family: 'Squada One', cursive;
+    opacity: 0.8;
+    padding: 1em;
+  }
+}
+
+.mask {
+  position: fixed;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+}
+
+#mask {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
