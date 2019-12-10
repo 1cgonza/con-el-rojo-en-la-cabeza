@@ -561,7 +561,7 @@ function () {
     this.width_k = 1367;
     this.setParams();
     window.onresize = this.update;
-    this.boxes = [document.getElementById('titulo'), document.getElementById('descripcion'), document.getElementById('fin')];
+    this.boxes = [document.getElementById('titulo'), document.getElementById('descripcion')];
   }
 
   _createClass(Resizer, [{
