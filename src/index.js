@@ -5,12 +5,18 @@ import fetch from './js/fetch';
 import lazy from './js/lazy';
 
 const main = document.getElementById('main');
+const about = document.getElementById('about');
+const aboutBtn = document.getElementById('aboutBtn');
 let elements = [];
 let scrolledLeft = 0;
-const count = document.getElementById('count');
+const counters = document.querySelectorAll('.count');
 const inicio = new Date('11/21/2019');
 const fin = new Date();
-count.innerText = (((fin.getTime() - inicio.getTime()) / (1000 * 3600 * 24)) | 0) + 1;
+
+counters.forEach(counter => {
+  const days = (((fin.getTime() - inicio.getTime()) / (1000 * 3600 * 24)) | 0) + 1;
+  counter.innerText = days;
+});
 
 const resize = new Resizer(main);
 
@@ -69,3 +75,7 @@ main.addEventListener('wheel', ev => {
 
   document.body.scrollLeft = document.documentElement.scrollLeft = scrolledLeft;
 });
+
+aboutBtn.onclick = () => {
+  about.classList.toggle('active');
+};

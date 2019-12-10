@@ -8,7 +8,10 @@ module.exports = (env, options) => {
   return {
     devtool: options.mode === 'development' ? 'cheap-eval-source-map' : false,
     devServer: {
-      contentBase: path.join(__dirname, 'dist')
+      contentBase: path.join(__dirname, 'docs')
+    },
+    output: {
+      path: __dirname + '/docs'
     },
     node: {
       fs: 'empty'

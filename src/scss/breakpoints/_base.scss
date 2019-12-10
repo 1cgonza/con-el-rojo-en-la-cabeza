@@ -50,6 +50,40 @@ header {
   }
 }
 
+#about {
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #e44b4b;
+  color: white;
+  width: 91px;
+  height: 3em;
+  overflow: hidden;
+  padding: 1em;
+
+  #aboutBtn::after {
+    content: 'Créditos';
+    display: block;
+    padding-bottom: 1em;
+    cursor: pointer;
+    text-align: right;
+  }
+
+  #contenido {
+    padding: 2em;
+  }
+
+  &.active {
+    width: 50%;
+    height: auto;
+
+    #aboutBtn::after {
+      content: 'X';
+    }
+  }
+}
+
 main {
   height: 100vh;
   padding: 0;

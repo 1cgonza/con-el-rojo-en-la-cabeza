@@ -40,6 +40,8 @@ export default class Zoom {
         this.img.style.height = `100vh`;
         this.img.style.transform = `translate(${0}px, ${0}px)`;
       }
+
+      document.getElementById('about').classList.remove('active');
     };
   }
 }

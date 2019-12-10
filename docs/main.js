@@ -465,12 +465,64 @@ var styles = __webpack_require__(1);
 // EXTERNAL MODULE: ./node_modules/dddrawings/lib/dddrawings.js
 var dddrawings = __webpack_require__(0);
 
+// CONCATENATED MODULE: ./src/js/fitText.js
+/*!
+ * FitText.js 1.0 jQuery free version
+ *
+ * Copyright 2011, Dave Rupert http://daverupert.com
+ * Released under the WTFPL license
+ * http://sam.zoy.org/wtfpl/
+ * Modified by Slawomir Kolodziej http://slawekk.info
+ *
+ * Date: Tue Aug 09 2011 10:45:54 GMT+0200 (CEST)
+ */
+function addEvent(el, type, fn) {
+  if (el.addEventListener) el.addEventListener(type, fn, false);else el.attachEvent('on' + type, fn);
+}
+
+function extend(obj, ext) {
+  for (var key in ext) {
+    if (ext.hasOwnProperty(key)) obj[key] = ext[key];
+  }
+
+  return obj;
+}
+
+/* harmony default export */ var fitText = (function (el, kompressor, options) {
+  var settings = extend({
+    minFontSize: -1 / 0,
+    maxFontSize: 1 / 0
+  }, options);
+
+  function fit(el) {
+    var compressor = kompressor || 1;
+
+    function resizer() {
+      el.style.fontSize = Math.max(Math.min(el.clientWidth / (compressor * 10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)) + 'px';
+    } // Call once to set.
+
+
+    resizer(); // Bind events
+    // If you have any js library which support Events, replace this part
+    // and remove addEvent function (or use original jQuery version)
+
+    addEvent(window, 'resize', resizer);
+    addEvent(window, 'orientationchange', resizer);
+  }
+
+  if (el.length) for (var i = 0; i < el.length; i++) {
+    fit(el[i]);
+  } else fit(el); // return set of elements
+
+  return el;
+});
 // CONCATENATED MODULE: ./src/js/Resizer.js
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -487,10 +539,20 @@ function () {
 
       _this.setParams();
 
-      _this.main.style.width = "".concat(_this.eleW * _this.elements.length, "px");
+      _this.main.style.width = "".concat(_this.eleW * _this.boxes.length + _this.eleW * _this.elements.length, "px");
+      _this.main.style.paddingLeft = "".concat(_this.eleW * 2, "px");
+
+      _this.boxes.forEach(function (box) {
+        return box.style.width = "".concat(_this.eleW, "px");
+      });
+
+      _this.boxes[1].style.left = "".concat(_this.eleW, "px");
+      fitText(_this.boxes[0], 0.3);
+      fitText(_this.boxes[1], 2.5);
 
       _this.elements.forEach(function (ele) {
-        return ele.container.style.width = "".concat(_this.eleW, "px");
+        ele.container.style.width = "".concat(_this.eleW, "px");
+        fitText(ele.container.querySelector('.descripcion'), 2);
       });
     };
 
@@ -499,6 +561,7 @@ function () {
     this.width_k = 1367;
     this.setParams();
     window.onresize = this.update;
+    this.boxes = [document.getElementById('titulo'), document.getElementById('descripcion'), document.getElementById('fin')];
   }
 
   _createClass(Resizer, [{
@@ -516,6 +579,64 @@ function () {
 
   return Resizer;
 }();
+
+
+// CONCATENATED MODULE: ./src/js/Zoom.js
+function Zoom_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Zoom = function Zoom(container, img) {
+  var _this = this;
+
+  Zoom_classCallCheck(this, Zoom);
+
+  this.container = container;
+  this.img = img;
+  this.zooming = false;
+
+  container.onmousemove = function (e) {
+    if (!_this.zooming) return;
+
+    var rect = _this.container.getBoundingClientRect();
+
+    var xStep = (_this.img.naturalWidth - rect.width) / rect.width;
+    var yStep = (_this.img.naturalHeight - rect.height) / rect.height;
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    _this.img.style.transform = "translate(-".concat(x * xStep, "px, -").concat(y * yStep, "px)");
+  };
+
+  container.onmouseenter = function () {
+    if (!_this.zooming) return;
+    _this.img.style.width = "".concat(_this.img.naturalWidth, "px");
+    _this.img.style.height = "".concat(_this.img.naturalHeight, "px");
+  };
+
+  container.onmouseleave = function () {
+    if (!_this.zooming) return;
+    _this.img.style.width = "auto";
+    _this.img.style.height = "100vh";
+    _this.img.style.transform = "translate(".concat(0, "px, ", 0, "px)");
+  };
+
+  container.onclick = function () {
+    _this.zooming = !_this.zooming;
+
+    if (_this.zooming) {
+      _this.container.classList.add('zooming');
+
+      _this.img.style.width = "".concat(_this.img.naturalWidth, "px");
+      _this.img.style.height = "".concat(_this.img.naturalHeight, "px");
+    } else {
+      _this.container.classList.remove('zooming');
+
+      _this.img.style.width = "auto";
+      _this.img.style.height = "100vh";
+      _this.img.style.transform = "translate(".concat(0, "px, ", 0, "px)");
+    }
+
+    document.getElementById('about').classList.remove('active');
+  };
+};
 
 
 // CONCATENATED MODULE: ./src/js/fetch.js
@@ -587,71 +708,42 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-function src_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 
 
 
- // TODO: prueba, hacer palpitar las fotos con el texto
 
-var main = document.getElementById('main');
+var src_main = document.getElementById('main');
+var about = document.getElementById('about');
+var aboutBtn = document.getElementById('aboutBtn');
 var src_elements = [];
-var src_images;
 var scrolledLeft = 0;
-var resize = new Resizer_Resizer(main);
-
-var Zoom = function Zoom(container, img) {
-  var _this = this;
-
-  src_classCallCheck(this, Zoom);
-
-  this.container = container;
-  this.img = img;
-
-  container.onmousemove = function (e) {
-    var rect = _this.container.getBoundingClientRect();
-
-    var xStep = (_this.img.naturalWidth - rect.width) / rect.width;
-    var yStep = (_this.img.naturalHeight - rect.height) / rect.height;
-    var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top;
-    _this.img.style.transform = "translate(-".concat(x * xStep, "px, -").concat(y * yStep, "px)");
-  };
-
-  container.onmouseenter = function () {
-    _this.container.classList.add('zooming');
-
-    _this.img.style.width = "".concat(_this.img.naturalWidth, "px");
-    _this.img.style.height = "".concat(_this.img.naturalHeight, "px");
-  };
-
-  container.onmouseleave = function () {
-    _this.container.classList.remove('zooming');
-
-    _this.img.style.width = "auto";
-    _this.img.style.height = "100vh";
-    _this.img.style.transform = "translate(".concat(0, "px, ", 0, "px)");
-  };
-};
+var counters = document.querySelectorAll('.count');
+var inicio = new Date('11/21/2019');
+var fin = new Date();
+counters.forEach(function (counter) {
+  var days = ((fin.getTime() - inicio.getTime()) / (1000 * 3600 * 24) | 0) + 1;
+  counter.innerText = days;
+});
+var resize = new Resizer_Resizer(src_main);
 
 function init(page) {
   fetch(page).then(function (res) {
-    console.log(res);
     res.photo.forEach(function (photo) {
       var container = document.createElement('div');
       var img = document.createElement('img');
-      var desc = document.createElement('p');
+      var desc = document.createElement('div');
       container.className = 'img';
       img.className = 'lazy';
       desc.className = 'descripcion';
       img.dataset.src = photo.url_k;
       img.setAttribute('alt', photo.title);
-      desc.innerText = photo.description._content;
+      desc.innerText = photo.description._content.replace(/&quot;/g, '"');
       container.style.width = "".concat(resize.eleW, "px");
       new Zoom(container, img);
       container.appendChild(img);
       container.appendChild(desc);
-      main.appendChild(container);
+      src_main.appendChild(container);
       src_elements.push({
         container: container,
         img: img
@@ -662,42 +754,32 @@ function init(page) {
     if (res.page < res.pages) {
       init(++res.page);
     } else {
-      src_images = _toConsumableArray(document.querySelectorAll('.lazy'));
+      var images = _toConsumableArray(document.querySelectorAll('.lazy'));
+
       resize.update(src_elements);
-      lazy(src_images);
+      lazy(images);
     }
   });
-} // main.onscroll = e => {
-//   if (!current) return;
-//   const img = current[1];
-//   const scrolled = main.scrollTop;
-//   const coords = current[0].boundingClientRect;
-//   const offY = scrolled - coords.top;
-//   const yStep = img.clientHeight / coords.height;
-//   const oStep = 1 / (window.innerHeight / 2);
-//   const o = offY < window.innerHeight / 2 ? offY * oStep : 1;
-//   const hue = offY > window.innerHeight / 5 ? 'contrast(249%) hue-rotate(-33deg)' : 'contrast(100%) hue-rotate(0deg)';
-//   console.log(main.scrollLeft);
-//   // img.style.bottom = `-${offY * yStep}px`;
-//   // img.style.opacity = o;
-//   // img.style.filter = hue;
-//   // console.log(imgH, divH);
-// };
-
+}
 
 init(1);
-main.addEventListener('wheel', function (ev) {
+src_main.addEventListener('wheel', function (ev) {
   ev.preventDefault();
-  scrolledLeft += ev.deltaY + ev.deltaX;
+  var delta = Math.sign(ev.deltaY);
+  scrolledLeft += delta * 40;
 
   if (scrolledLeft < 0) {
     scrolledLeft = 0;
-  } else if (scrolledLeft > main.clientWidth) {
-    scrolledLeft = main.clientWidth;
+  } else if (scrolledLeft > src_main.clientWidth) {
+    scrolledLeft = src_main.clientWidth;
   }
 
   document.body.scrollLeft = document.documentElement.scrollLeft = scrolledLeft;
 });
+
+aboutBtn.onclick = function () {
+  about.classList.toggle('active');
+};
 
 /***/ })
 /******/ ]);
