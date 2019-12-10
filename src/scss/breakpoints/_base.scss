@@ -61,6 +61,7 @@ header {
   height: 3em;
   overflow: hidden;
   padding: 1em;
+  transition: all 0.3s;
 
   #aboutBtn::after {
     content: 'Créditos';
