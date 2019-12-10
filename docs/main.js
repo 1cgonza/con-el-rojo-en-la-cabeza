@@ -729,6 +729,7 @@ var resize = new Resizer_Resizer(src_main);
 
 function init(page) {
   fetch(page).then(function (res) {
+    res.photo.reverse();
     res.photo.forEach(function (photo) {
       var container = document.createElement('div');
       var img = document.createElement('img');
