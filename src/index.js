@@ -22,6 +22,7 @@ const resize = new Resizer(main);
 
 function init(page) {
   fetch(page).then(res => {
+    res.photo.reverse();
     res.photo.forEach(photo => {
       const container = document.createElement('div');
       const img = document.createElement('img');
