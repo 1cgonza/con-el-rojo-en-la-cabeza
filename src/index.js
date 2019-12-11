@@ -49,13 +49,12 @@ function init(page) {
       });
     });
 
-    resize.bindElements(elements);
-
     if (res.page < res.pages) {
       init(++res.page);
     } else {
       const images = [...document.querySelectorAll('.lazy')];
-      resize.update(elements);
+      resize.bindElements(elements);
+      resize.update();
       lazy(images);
     }
   });
@@ -76,6 +75,11 @@ main.addEventListener('wheel', ev => {
 
   document.body.scrollLeft = document.documentElement.scrollLeft = scrolledLeft;
 });
+
+// main.ontouchstart = e => {
+//   e.preventDefault();
+//   console.log('touch');
+// };
 
 aboutBtn.onclick = () => {
   about.classList.toggle('active');

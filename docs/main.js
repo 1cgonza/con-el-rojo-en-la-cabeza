@@ -465,6 +465,19 @@ var styles = __webpack_require__(1);
 // EXTERNAL MODULE: ./node_modules/dddrawings/lib/dddrawings.js
 var dddrawings = __webpack_require__(0);
 
+// CONCATENATED MODULE: ./src/js/utils.js
+var debounceTimer;
+function debounce(hold) {
+  hold = hold || 250;
+  return new Promise(function (resolve, reject) {
+    // trick for runing code only when resize ends
+    // https://css-tricks.com/snippets/jquery/done-resizing-event/
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function () {
+      resolve();
+    }, hold);
+  });
+}
 // CONCATENATED MODULE: ./src/js/fitText.js
 /*!
  * FitText.js 1.0 jQuery free version
@@ -476,44 +489,20 @@ var dddrawings = __webpack_require__(0);
  *
  * Date: Tue Aug 09 2011 10:45:54 GMT+0200 (CEST)
  */
-function addEvent(el, type, fn) {
-  if (el.addEventListener) el.addEventListener(type, fn, false);else el.attachEvent('on' + type, fn);
-}
-
-function extend(obj, ext) {
-  for (var key in ext) {
-    if (ext.hasOwnProperty(key)) obj[key] = ext[key];
-  }
-
-  return obj;
-}
-
-/* harmony default export */ var fitText = (function (el, kompressor, options) {
-  var settings = extend({
+/* harmony default export */ var fitText = (function (el, kompressor) {
+  var settings = {
     minFontSize: -1 / 0,
     maxFontSize: 1 / 0
-  }, options);
+  };
 
   function fit(el) {
     var compressor = kompressor || 1;
-
-    function resizer() {
-      el.style.fontSize = Math.max(Math.min(el.clientWidth / (compressor * 10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)) + 'px';
-    } // Call once to set.
-
-
-    resizer(); // Bind events
-    // If you have any js library which support Events, replace this part
-    // and remove addEvent function (or use original jQuery version)
-
-    addEvent(window, 'resize', resizer);
-    addEvent(window, 'orientationchange', resizer);
+    el.style.fontSize = Math.max(Math.min(el.clientWidth / (compressor * 10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)) + 'px';
   }
 
   if (el.length) for (var i = 0; i < el.length; i++) {
     fit(el[i]);
-  } else fit(el); // return set of elements
-
+  } else fit(el);
   return el;
 });
 // CONCATENATED MODULE: ./src/js/Resizer.js
@@ -522,6 +511,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -547,21 +537,26 @@ function () {
       });
 
       _this.boxes[1].style.left = "".concat(_this.eleW, "px");
-      fitText(_this.boxes[0], 0.3);
-      fitText(_this.boxes[1], 2.5);
 
       _this.elements.forEach(function (ele) {
         ele.container.style.width = "".concat(_this.eleW, "px");
+        ele.container.style.height = "".concat(_this.eleH, "px");
         fitText(ele.container.querySelector('.descripcion'), 2);
       });
+
+      fitText(_this.boxes[0], 0.3);
+      fitText(_this.boxes[1], 2.5);
     };
 
     this.main = main;
+    this.elements = [];
+    this.boxes = [document.getElementById('titulo'), document.getElementById('descripcion')];
     this.height_k = 2048;
     this.width_k = 1367;
-    this.setParams();
-    window.onresize = this.update;
-    this.boxes = [document.getElementById('titulo'), document.getElementById('descripcion')];
+
+    window.onresize = function () {
+      return debounce().then(_this.update);
+    };
   }
 
   _createClass(Resizer, [{
@@ -572,8 +567,15 @@ function () {
   }, {
     key: "setParams",
     value: function setParams() {
-      this.h = window.innerHeight;
-      this.eleW = Object(dddrawings["sizeFromPercentage"])(Object(dddrawings["getPercent"])(this.h, this.height_k), this.width_k);
+      var screenW = Math.min(window.innerWidth, window.outerWidth);
+      var screenH = Math.min(window.innerHeight, window.outerHeight);
+      this.eleH = screenH;
+      this.eleW = Object(dddrawings["sizeFromPercentage"])(Object(dddrawings["getPercent"])(this.eleH, this.height_k), this.width_k);
+
+      if (this.eleW > screenW) {
+        this.eleW = screenW;
+        this.eleH = Object(dddrawings["sizeFromPercentage"])(Object(dddrawings["getPercent"])(this.eleW, this.width_k), this.height_k);
+      }
     }
   }]);
 
@@ -584,59 +586,77 @@ function () {
 // CONCATENATED MODULE: ./src/js/Zoom.js
 function Zoom_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Zoom = function Zoom(container, img) {
-  var _this = this;
+function Zoom_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  Zoom_classCallCheck(this, Zoom);
+function Zoom_createClass(Constructor, protoProps, staticProps) { if (protoProps) Zoom_defineProperties(Constructor.prototype, protoProps); if (staticProps) Zoom_defineProperties(Constructor, staticProps); return Constructor; }
 
-  this.container = container;
-  this.img = img;
-  this.zooming = false;
+var Zoom =
+/*#__PURE__*/
+function () {
+  function Zoom(container, img) {
+    var _this = this;
 
-  container.onmousemove = function (e) {
-    if (!_this.zooming) return;
+    Zoom_classCallCheck(this, Zoom);
 
-    var rect = _this.container.getBoundingClientRect();
+    this.container = container;
+    this.img = img;
+    this.zooming = false;
 
-    var xStep = (_this.img.naturalWidth - rect.width) / rect.width;
-    var yStep = (_this.img.naturalHeight - rect.height) / rect.height;
-    var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top;
-    _this.img.style.transform = "translate(-".concat(x * xStep, "px, -").concat(y * yStep, "px)");
-  };
+    container.onmousemove = function (e) {
+      if (!_this.zooming) return;
 
-  container.onmouseenter = function () {
-    if (!_this.zooming) return;
-    _this.img.style.width = "".concat(_this.img.naturalWidth, "px");
-    _this.img.style.height = "".concat(_this.img.naturalHeight, "px");
-  };
+      _this.getPos(e);
+    };
 
-  container.onmouseleave = function () {
-    if (!_this.zooming) return;
-    _this.img.style.width = "auto";
-    _this.img.style.height = "100vh";
-    _this.img.style.transform = "translate(".concat(0, "px, ", 0, "px)");
-  };
-
-  container.onclick = function () {
-    _this.zooming = !_this.zooming;
-
-    if (_this.zooming) {
-      _this.container.classList.add('zooming');
-
+    container.onmouseenter = function () {
+      if (!_this.zooming) return;
       _this.img.style.width = "".concat(_this.img.naturalWidth, "px");
       _this.img.style.height = "".concat(_this.img.naturalHeight, "px");
-    } else {
-      _this.container.classList.remove('zooming');
+    };
 
+    container.onmouseleave = function () {
+      if (!_this.zooming) return;
       _this.img.style.width = "auto";
       _this.img.style.height = "100vh";
       _this.img.style.transform = "translate(".concat(0, "px, ", 0, "px)");
-    }
+    };
 
-    document.getElementById('about').classList.remove('active');
-  };
-};
+    container.onclick = function (e) {
+      _this.zooming = !_this.zooming;
+
+      if (_this.zooming) {
+        _this.container.classList.add('zooming');
+
+        _this.img.style.width = "".concat(_this.img.naturalWidth, "px");
+        _this.img.style.height = "".concat(_this.img.naturalHeight, "px");
+
+        _this.getPos(e);
+      } else {
+        _this.container.classList.remove('zooming');
+
+        _this.img.style.width = "auto";
+        _this.img.style.height = "100vh";
+        _this.img.style.transform = "translate(".concat(0, "px, ", 0, "px)");
+      }
+
+      document.getElementById('about').classList.remove('active');
+    };
+  }
+
+  Zoom_createClass(Zoom, [{
+    key: "getPos",
+    value: function getPos(e) {
+      var rect = this.container.getBoundingClientRect();
+      var xStep = (this.img.naturalWidth - rect.width) / rect.width;
+      var yStep = (this.img.naturalHeight - rect.height) / rect.height;
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      this.img.style.transform = "translate(-".concat(x * xStep, "px, -").concat(y * yStep, "px)");
+    }
+  }]);
+
+  return Zoom;
+}();
 
 
 // CONCATENATED MODULE: ./src/js/fetch.js
@@ -750,14 +770,14 @@ function init(page) {
         img: img
       });
     });
-    resize.bindElements(src_elements);
 
     if (res.page < res.pages) {
       init(++res.page);
     } else {
       var images = _toConsumableArray(document.querySelectorAll('.lazy'));
 
-      resize.update(src_elements);
+      resize.bindElements(src_elements);
+      resize.update();
       lazy(images);
     }
   });
@@ -776,7 +796,10 @@ src_main.addEventListener('wheel', function (ev) {
   }
 
   document.body.scrollLeft = document.documentElement.scrollLeft = scrolledLeft;
-});
+}); // main.ontouchstart = e => {
+//   e.preventDefault();
+//   console.log('touch');
+// };
 
 aboutBtn.onclick = function () {
   about.classList.toggle('active');
