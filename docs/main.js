@@ -739,13 +739,6 @@ var aboutBtn = document.getElementById('aboutBtn');
 var ayudas = document.querySelectorAll('.ayuda');
 var src_elements = [];
 var scrolledLeft = 0;
-var counters = document.querySelectorAll('.count');
-var inicio = new Date('11/21/2019');
-var fin = new Date();
-counters.forEach(function (counter) {
-  var days = ((fin.getTime() - inicio.getTime()) / (1000 * 3600 * 24) | 0) + 1;
-  counter.innerText = days;
-});
 var resize = new Resizer_Resizer(src_main);
 
 function init(page) {

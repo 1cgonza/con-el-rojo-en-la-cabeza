@@ -10,14 +10,6 @@ const aboutBtn = document.getElementById('aboutBtn');
 const ayudas = document.querySelectorAll('.ayuda');
 let elements = [];
 let scrolledLeft = 0;
-const counters = document.querySelectorAll('.count');
-const inicio = new Date('11/21/2019');
-const fin = new Date();
-
-counters.forEach(counter => {
-  const days = (((fin.getTime() - inicio.getTime()) / (1000 * 3600 * 24)) | 0) + 1;
-  counter.innerText = days;
-});
 
 const resize = new Resizer(main);
 
