@@ -61,7 +61,7 @@ header {
 #about {
   z-index: 9999;
   position: fixed;
-  top: 0;
+  bottom: 0;
   right: 0;
   background-color: $rojo;
   color: lighten($amarillo, 10%);
@@ -185,14 +185,17 @@ svg#icon-swipe {
     transform-origin: 50% 100%;
     animation: hand-swipe 3.5s infinite ease;
   }
+
   #left,
   #right {
     fill: $amarillo;
     opacity: 0;
   }
+
   #right {
     animation: arrow-right 1.5s infinite ease;
   }
+
   #left {
     animation: arrow-left 1.5s infinite ease;
   }
@@ -202,18 +205,23 @@ svg#icon-swipe {
   5% {
     transform: translateX(3px) rotate(6deg);
   }
+
   25% {
     transform: translateX(0px) rotate(0deg);
   }
+
   28% {
     transform: translateX(0px) rotate(0deg);
   }
+
   33% {
     transform: translateX(-3px) rotate(-6deg);
   }
+
   53% {
     transform: translateX(0px) rotate(0deg);
   }
+
   100% {
     transform: translateX(0px) rotate(0deg);
   }
@@ -236,6 +244,7 @@ svg#icon-swipe {
     transform: translateX(0);
     opacity: 1;
   }
+
   100% {
     transform: translateX(-10px);
     opacity: 0;
