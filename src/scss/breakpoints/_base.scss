@@ -176,7 +176,7 @@ main {
   transform: translate(-50%, -50%);
 }
 
-svg#icon-swipe {
+svg.icon-swipe {
   width: 72px;
   height: 35px;
 
@@ -186,17 +186,17 @@ svg#icon-swipe {
     animation: hand-swipe 3.5s infinite ease;
   }
 
-  #left,
-  #right {
+  .left,
+  .right {
     fill: $amarillo;
     opacity: 0;
   }
 
-  #right {
+  .right {
     animation: arrow-right 1.5s infinite ease;
   }
 
-  #left {
+  .left {
     animation: arrow-left 1.5s infinite ease;
   }
 }

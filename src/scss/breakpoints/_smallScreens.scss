@@ -26,7 +26,7 @@
     animation-name: scroll;
   }
 
-  svg#icon-swipe {
+  svg.icon-swipe {
     transform: translate(-30%, 65%);
     width: 150px;
   }
@@ -60,6 +60,7 @@
     transform: translateX(-20px);
     opacity: 1;
   }
+
   100% {
     transform: translateX(-30px);
     opacity: 0;
