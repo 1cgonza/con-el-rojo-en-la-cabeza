@@ -7,6 +7,7 @@ import lazy from './js/lazy';
 const main = document.getElementById('main');
 const about = document.getElementById('about');
 const aboutBtn = document.getElementById('aboutBtn');
+const ayudas = document.querySelectorAll('.ayuda');
 let elements = [];
 let scrolledLeft = 0;
 const counters = document.querySelectorAll('.count');
@@ -62,28 +63,25 @@ function init(page) {
 
 init(1);
 
-main.addEventListener(
-  'wheel',
-  ev => {
-    ev.preventDefault();
-    const delta = Math.sign(ev.deltaY);
-    scrolledLeft += delta * 40;
+main.addEventListener('wheel', ev => {
+  ev.preventDefault();
+  const delta = Math.sign(ev.deltaY);
+  scrolledLeft += delta * 40;
 
-    if (scrolledLeft < 0) {
-      scrolledLeft = 0;
-    } else if (scrolledLeft > main.clientWidth) {
-      scrolledLeft = main.clientWidth;
-    }
+  if (scrolledLeft < 0) {
+    scrolledLeft = 0;
+  } else if (scrolledLeft > main.clientWidth) {
+    scrolledLeft = main.clientWidth;
+  }
 
-    document.body.scrollLeft = document.documentElement.scrollLeft = scrolledLeft;
-  },
-  { passive: true }
-);
+  if (scrolledLeft > resize.eleW) {
+    ayudas.forEach(icono => icono.classList.add('hide'));
+  } else {
+    ayudas.forEach(icono => icono.classList.remove('hide'));
+  }
 
-// main.ontouchstart = e => {
-//   e.preventDefault();
-//   console.log('touch');
-// };
+  document.body.scrollLeft = document.documentElement.scrollLeft = scrolledLeft;
+});
 
 aboutBtn.onclick = () => {
   about.classList.toggle('active');

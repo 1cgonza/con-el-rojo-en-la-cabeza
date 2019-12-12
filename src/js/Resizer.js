@@ -40,10 +40,10 @@ export default class Resizer {
     this.elements.forEach(ele => {
       ele.container.style.width = `${this.eleW}px`;
       ele.container.style.height = `${this.eleH}px`;
-      fitText(ele.container.querySelector('.descripcion'), 2);
+      fitText(ele.container.querySelector('.descripcion'), 1.8);
     });
 
     fitText(this.boxes[0], 0.3);
-    fitText(this.boxes[1], 2.5);
+    fitText(this.boxes[1], 3);
   };
 }

@@ -541,11 +541,11 @@ function () {
       _this.elements.forEach(function (ele) {
         ele.container.style.width = "".concat(_this.eleW, "px");
         ele.container.style.height = "".concat(_this.eleH, "px");
-        fitText(ele.container.querySelector('.descripcion'), 2);
+        fitText(ele.container.querySelector('.descripcion'), 1.8);
       });
 
       fitText(_this.boxes[0], 0.3);
-      fitText(_this.boxes[1], 2.5);
+      fitText(_this.boxes[1], 3);
     };
 
     this.main = main;
@@ -736,6 +736,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var src_main = document.getElementById('main');
 var about = document.getElementById('about');
 var aboutBtn = document.getElementById('aboutBtn');
+var ayudas = document.querySelectorAll('.ayuda');
 var src_elements = [];
 var scrolledLeft = 0;
 var counters = document.querySelectorAll('.count');
@@ -795,13 +796,18 @@ src_main.addEventListener('wheel', function (ev) {
     scrolledLeft = src_main.clientWidth;
   }
 
+  if (scrolledLeft > resize.eleW) {
+    ayudas.forEach(function (icono) {
+      return icono.classList.add('hide');
+    });
+  } else {
+    ayudas.forEach(function (icono) {
+      return icono.classList.remove('hide');
+    });
+  }
+
   document.body.scrollLeft = document.documentElement.scrollLeft = scrolledLeft;
-}, {
-  passive: true
-}); // main.ontouchstart = e => {
-//   e.preventDefault();
-//   console.log('touch');
-// };
+});
 
 aboutBtn.onclick = function () {
   about.classList.toggle('active');

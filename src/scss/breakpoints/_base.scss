@@ -16,7 +16,7 @@ body {
 
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Rubik', sans-serif;
 }
 
 header {
@@ -27,25 +27,33 @@ header {
   z-index: 999;
 
   h1 {
-    font-family: 'Squada One', cursive;
+    font-family: trumpgothicpro, sans-serif;
+    font-weight: 700;
+    font-style: normal;
     font-size: 0;
-    line-height: 0.7;
+    line-height: 0.8;
     margin: 0;
     padding: 0;
     text-transform: uppercase;
     transform: translateY(-50%);
     position: absolute;
     top: 50%;
-    color: #e44b4b;
+    color: $amarillo;
+    z-index: 1;
+
+    .highlight {
+      color: $rojo;
+      z-index: 99;
+    }
   }
 
   #descripcion {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    color: white;
+    color: lighten($amarillo, 10%);
     letter-spacing: 2px;
-    padding: 5px;
+    padding: 1em;
     font-size: 0;
   }
 }
@@ -55,8 +63,8 @@ header {
   position: fixed;
   top: 0;
   right: 0;
-  background-color: #e44b4b;
-  color: white;
+  background-color: $rojo;
+  color: lighten($amarillo, 10%);
   width: 91px;
   height: 3em;
   overflow: hidden;
@@ -121,12 +129,16 @@ main {
   .descripcion {
     position: absolute;
     white-space: normal;
-    color: #faf6f6;
+    color: $amarillo;
     text-shadow: 1px 1px #000;
     bottom: 3em;
     left: 0;
     width: 100%;
-    font-family: 'Squada One', cursive;
+    font-family: trumpgothicpro, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     opacity: 0.8;
     padding: 1em;
   }
@@ -145,4 +157,96 @@ main {
   height: 100vh;
   top: 0;
   left: 0;
+}
+
+.mouse,
+.hand {
+  position: fixed;
+  pointer-events: none;
+  bottom: 10px;
+  left: 50%;
+}
+
+.mouse {
+  display: none;
+}
+
+.hand {
+  display: block;
+  transform: translate(-50%, -50%);
+}
+
+svg#icon-swipe {
+  width: 72px;
+  height: 35px;
+
+  #hand {
+    fill: $amarillo2;
+    transform-origin: 50% 100%;
+    animation: hand-swipe 3.5s infinite ease;
+  }
+  #left,
+  #right {
+    fill: $amarillo;
+    opacity: 0;
+  }
+  #right {
+    animation: arrow-right 1.5s infinite ease;
+  }
+  #left {
+    animation: arrow-left 1.5s infinite ease;
+  }
+}
+
+@keyframes hand-swipe {
+  5% {
+    transform: translateX(3px) rotate(6deg);
+  }
+  25% {
+    transform: translateX(0px) rotate(0deg);
+  }
+  28% {
+    transform: translateX(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateX(-3px) rotate(-6deg);
+  }
+  53% {
+    transform: translateX(0px) rotate(0deg);
+  }
+  100% {
+    transform: translateX(0px) rotate(0deg);
+  }
+}
+
+@keyframes arrow-right {
+  0% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+}
+
+@keyframes arrow-left {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+}
+
+.ayuda {
+  transition: opacity 1s;
+  opacity: 1;
+
+  &.hide {
+    opacity: 0;
+  }
 }
