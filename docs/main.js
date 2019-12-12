@@ -796,6 +796,8 @@ src_main.addEventListener('wheel', function (ev) {
   }
 
   document.body.scrollLeft = document.documentElement.scrollLeft = scrolledLeft;
+}, {
+  passive: true
 }); // main.ontouchstart = e => {
 //   e.preventDefault();
 //   console.log('touch');

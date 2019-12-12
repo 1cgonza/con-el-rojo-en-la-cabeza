@@ -62,19 +62,23 @@ function init(page) {
 
 init(1);
 
-main.addEventListener('wheel', ev => {
-  ev.preventDefault();
-  const delta = Math.sign(ev.deltaY);
-  scrolledLeft += delta * 40;
+main.addEventListener(
+  'wheel',
+  ev => {
+    ev.preventDefault();
+    const delta = Math.sign(ev.deltaY);
+    scrolledLeft += delta * 40;
 
-  if (scrolledLeft < 0) {
-    scrolledLeft = 0;
-  } else if (scrolledLeft > main.clientWidth) {
-    scrolledLeft = main.clientWidth;
-  }
+    if (scrolledLeft < 0) {
+      scrolledLeft = 0;
+    } else if (scrolledLeft > main.clientWidth) {
+      scrolledLeft = main.clientWidth;
+    }
 
-  document.body.scrollLeft = document.documentElement.scrollLeft = scrolledLeft;
-});
+    document.body.scrollLeft = document.documentElement.scrollLeft = scrolledLeft;
+  },
+  { passive: true }
+);
 
 // main.ontouchstart = e => {
 //   e.preventDefault();
