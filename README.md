@@ -24,6 +24,8 @@ Luego de iniciar la cuenta, puede hacer un **Fork** de este repositorio a su cue
 
 Va a https://github.com/1cgonza/con-el-rojo-en-la-cabeza y hace clic en el botón _Fork_ en la parte superior.
 
+:exclamation: Donde dice `Repository name *` ponga el nombre que le quiere dar a su repositorio (el nombre del proyecto en formato de URL: sin espacio ni mayúsculas y las palabras separadas por -) Esto va a ser importante luego.
+
 ### Clonar el repositorio
 
 Desde la terminal, ir a la carpeta donde quiere guardar el proyecto y correr el comando:
@@ -31,10 +33,10 @@ Desde la terminal, ir a la carpeta donde quiere guardar el proyecto y correr el 
 :exclamation: Cambiar las siguientes partes del comando:
 
 - Donde dice `1cgonza`, cambiar por su nombre de usuario en Github.
-- Donde dice `nombre-de-su-proyecto`, cambiar por el nombre que le quiere dar a la carpeta que se va a crear con el código):
+- Donde dice `con-el-rojo-en-la-cabeza`, cambiar por el nombre que le puso a su repositorio en el paso anterior:
 
 ```bash
-git clone https://github.com/1cgonza/con-el-rojo-en-la-cabeza.git nombre-de-su-proyecto
+git clone https://github.com/1cgonza/con-el-rojo-en-la-cabeza.git
 ```
 
 ### Entrar a la carpeta
@@ -73,7 +75,7 @@ Abrir este enlace en el explorador: http://localhost:3000/
 
 Cuando ejecutamos el comando `yarn dev` la terminal queda ocupada por el servidor, para detenerlo va a la terminal y presiona en el teclado: **CTRL+C**.
 
-## Cambiar las imágenes
+### Cambiar las imágenes
 
 Este proyecto extrae las imágenes desde Flickr. Por ejemplo, la colección para "Con el Rojo en la Cabeza" esta en https://www.flickr.com/photos/185741681@N03/
 
@@ -99,10 +101,22 @@ const parametros = {
 };
 ```
 
-## Textos sobre las imágenes
+### Textos sobre las imágenes
 
 Los textos que acompañan cada imagen en la galería vienen de la descripción de la foto en Flickr, para editarlas, edite la descripción directamente en Flickr.
 
-## Textos de título, introducción y créditos
+### Textos de título, introducción y créditos
 
 Estos textos los puede editar en el archivo `index.html`.
+
+## Publicar su proyecto en Github Pages (Gratis)
+
+Si siguió los pasos iniciales donde creó una cuenta de Github e hizo el _Fork_ en su cuenta. Simplemente debe subir los cambios que realizó en su computador a su repositorio en Github. Esto crea automáticamente una página gratuita en una URL parecida a esta: https://1cgonza.github.io/con-el-rojo-en-la-cabeza/
+
+La diferencia es que reemplaza `1cgonza` por su usuario de Github y `con-el-rojo-en-la-cabeza` por el nombre de su repositorio en Github.
+
+Si cambió el nombre del repositorio, también lo debe cambiar en el archivo: `vite.config.js`:
+
+```js
+  base: '/con-el-rojo-en-la-cabeza/',
+```
