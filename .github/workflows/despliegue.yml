@@ -43,7 +43,7 @@ jobs:
       - name: 🕸 Subir archivos exportados
         uses: actions/upload-pages-artifact@v3
         with:
-          path: /publico
+          path: publico
 
   deploy:
     name: 🦅 Despliegue a servidores de Github
