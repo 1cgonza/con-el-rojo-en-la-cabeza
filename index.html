@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png" />
-    <link rel="manifest" href="./site.webmanifest" />
-    <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#f21010" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <meta name="msapplication-TileColor" content="#e6552b" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://use.typekit.net/igw2dxm.css" />
@@ -20,8 +18,8 @@
     />
   </head>
   <body>
-    <nav id="about">
-      <div id="aboutBtn"></div>
+    <nav id="creditos">
+      <div id="botonCreditos"></div>
       <div id="contenido">
         En esta iniciativa participaron más de 85 personas que fueron fotografiadas en las jornadas del 21, 25, 27 de
         noviembre y el 4 de diciembre del Paro Nacional en Bogotá. Las frases corresponden a los motivos por las cuales
@@ -44,7 +42,9 @@
         llevan el rojo en la cabeza. Estas son algunas caras de la protesta.
       </div>
     </header>
-    <main id="main"></main>
+
+    <main id="contenedorGeneral"></main>
+
     <div class="mouse ayuda">
       <svg class="icon-swipe" xmlns="http://www.w3.org/2000/svg" width="30" height="25" viewBox="0 0 30 25">
         <title>icon-swipe</title>
@@ -52,9 +52,10 @@
         <path class="left" d="M8,4.08H2.19l2.06,2.1L3.44,7,0,3.5,3.45,0l.81.82L2.19,2.92H8Z" />
       </svg>
     </div>
+
     <div class="hand ayuda">
       <svg class="icon-swipe" xmlns="http://www.w3.org/2000/svg" width="30" height="25" viewBox="0 0 30 25">
-        <title>icon-swipe</title>
+        <title>Mover hacia la derecha</title>
         <path class="right" d="M30,3.5,26.56,7l-.81-.82,2.06-2.1H22V2.92h5.81L25.74.82,26.55,0Z" />
         <path class="left" d="M8,4.08H2.19l2.06,2.1L3.44,7,0,3.5,3.45,0l.81.82L2.19,2.92H8Z" />
         <path
@@ -63,5 +64,7 @@
         />
       </svg>
     </div>
+
+    <script type="module" src="/fuente/programa.js"></script>
   </body>
 </html>

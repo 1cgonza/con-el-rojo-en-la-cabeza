@@ -1,3 +1,9 @@
+@use 'sass:color';
+
+$amarillo: #e7dfae;
+$rojo: #e44b4b;
+$amarillo2: color.scale($amarillo, $lightness: 10%);
+
 html {
   box-sizing: border-box;
 }
@@ -51,27 +57,27 @@ header {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    color: lighten($amarillo, 10%);
+    color: $amarillo2;
     letter-spacing: 2px;
     padding: 1em;
     font-size: 0;
   }
 }
 
-#about {
+#creditos {
   z-index: 9999;
   position: fixed;
   bottom: 0;
   right: 0;
   background-color: $rojo;
-  color: lighten($amarillo, 10%);
+  color: $amarillo2;
   width: 91px;
   height: 3em;
   overflow: hidden;
   padding: 1em;
   transition: all 0.3s;
 
-  #aboutBtn::after {
+  #botonCreditos::after {
     content: 'Créditos';
     display: block;
     padding-bottom: 1em;
@@ -87,7 +93,7 @@ header {
     width: 100%;
     height: auto;
 
-    #aboutBtn::after {
+    #botonCreditos::after {
       content: 'X';
     }
   }
@@ -117,12 +123,12 @@ main {
     opacity: 0;
     transition: opacity 5s;
 
-    &.loaded {
+    &.cargado {
       opacity: 1;
     }
   }
 
-  &.zooming {
+  &.escalado {
     cursor: zoom-out;
   }
 
@@ -257,5 +263,84 @@ svg.icon-swipe {
 
   &.hide {
     opacity: 0;
+  }
+}
+
+@media only screen and (min-width: 1030px) {
+  .hand {
+    display: none;
+  }
+
+  .mouse {
+    display: block;
+    width: 30px;
+    height: 60px;
+    margin-left: -15px;
+    margin-top: -30px;
+    box-shadow: inset 0 0 0 1px $amarillo2;
+    border-radius: 20px;
+
+    &:before {
+      content: '';
+      left: 50%;
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: $amarillo2;
+      margin-left: -3px;
+      top: 6px;
+      border-radius: 3px;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+      animation-name: scroll;
+    }
+
+    svg.icon-swipe {
+      transform: translate(-30%, 65%);
+      width: 150px;
+    }
+  }
+
+  @keyframes scroll {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+  }
+
+  @keyframes arrow-right {
+    0% {
+      transform: translateX(0px);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateX(10px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes arrow-left {
+    0% {
+      transform: translateX(-20px);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateX(-30px);
+      opacity: 0;
+    }
+  }
+}
+
+@media only screen and (min-width: 1240px) {
+  #creditos {
+    &.active {
+      width: 50%;
+    }
   }
 }
