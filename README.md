@@ -16,9 +16,22 @@ Usted puede usar el código de este proyecto para crear su propia galería de im
 - Git: https://git-scm.com/downloads
 - Visual Stuido Code (o cualquier editor de código): https://code.visualstudio.com/
 
+### Hacer copia del repositorio en su cuenta de Github
+
+Si no tiene cuenta en https://github.com/ puede crear una gratuita.
+
+Luego de iniciar la cuenta, puede hacer un **Fork** de este repositorio a su cuenta.
+
+Va a https://github.com/1cgonza/con-el-rojo-en-la-cabeza y hace clic en el botón _Fork_ en la parte superior.
+
 ### Clonar el repositorio
 
-Desde la terminal, ir a la carpeta donde quiere guardar el proyecto y correr el comando (cambiar la parte que dice `nombre-de-su-proyecto` por el nombre que le quiere dar a la carpeta que se va a crear con el código):
+Desde la terminal, ir a la carpeta donde quiere guardar el proyecto y correr el comando:
+
+:exclamation: Cambiar las siguientes partes del comando:
+
+- Donde dice `1cgonza`, cambiar por su nombre de usuario en Github.
+- Donde dice `nombre-de-su-proyecto`, cambiar por el nombre que le quiere dar a la carpeta que se va a crear con el código):
 
 ```bash
 git clone https://github.com/1cgonza/con-el-rojo-en-la-cabeza.git nombre-de-su-proyecto
