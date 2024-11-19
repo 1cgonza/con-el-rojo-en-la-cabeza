@@ -89,3 +89,7 @@ const parametros = {
 ## Textos sobre las imágenes
 
 Los textos que acompañan cada imagen en la galería vienen de la descripción de la foto en Flickr, para editarlas, edite la descripción directamente en Flickr.
+
+## Textos de título, introducción y créditos
+
+Estos textos los puede editar en el archivo `index.html`.
