@@ -24,8 +24,7 @@ function inicio(pagina) {
       contenedor.className = 'img';
       img.className = 'perezoso';
       desc.className = 'descripcion';
-
-      img.dataset.src = photo.url_k;
+      img.dataset.src = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`;
       img.setAttribute('alt', photo.title);
       desc.innerText = photo.description._content.replace(/&quot;/g, '"');
       contenedor.style.width = `${escala.eleW}px`;
